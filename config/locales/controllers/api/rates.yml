@@ -1,0 +1,6 @@
+en:
+  api:
+    errors:
+      too_many_requests: You are making too many requests
+    rates:
+      invalid_date_format: "Invalid date format %{date}"

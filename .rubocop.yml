@@ -1,0 +1,34 @@
+require:
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.1
+  NewCops: enable
+  Exclude:
+    - vendor/**/*
+    - tmp/**/*
+    - bin/**/*
+    - config/**/*
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Layout/HashAlignment:
+  EnforcedColonStyle: table
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: never
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+Style/GlobalVars:
+  Enabled: false

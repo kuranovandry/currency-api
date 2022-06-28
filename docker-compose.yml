@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+    networks:
+      - currency-api
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis:/data'
+    networks:
+      - currency-api
+
+  sidekiq:
+    container_name: sidekiq
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bundle exec sidekiq
+    restart: always
+    depends_on:
+      - 'web'
+    volumes:
+      - '.:/currency-api'
+      - 'gem_cache:/usr/local/bundle/gems'
+    env_file: .env
+    networks:
+      - currency-api
+
+  web:
+    container_name: web
+    depends_on:
+      - 'postgres'
+      - 'redis'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - '.:/currency-api'
+      - 'gem_cache:/usr/local/bundle/gems'
+    env_file: .env
+    networks:
+      - currency-api
+
+volumes:
+  redis:
+  postgres:
+  gem_cache:
+
+networks:
+  currency-api:
+    name: currency-api
+    driver: bridge

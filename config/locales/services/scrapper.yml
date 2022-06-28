@@ -1,0 +1,9 @@
+en:
+  info:
+    beginning:         'Scrapper started his work %{date}'
+    ending:            'Scrapper finished his work, %{count} records added'
+  errors:
+    request_exception: 'Received exception: %{message} while fetching data from %{url}'
+    bad_request:       'Bad request result for URL: ${url}'
+    not_found:         'Date was not found for today, URL: ${url}'
+    json_parse:        'Received JSON parsing error: %{message} while fetching data from ${url}'

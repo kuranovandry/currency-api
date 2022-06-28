@@ -1,0 +1,101 @@
+...# Purpose
+
+# Description
+
+inside .github create folder workflows
+in workflows create file ci.yml and ci_pull_requests.yml
+
+ci.yml contains
+
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 3.0.2
+
+    - name: Bundle
+      run: |
+        gem install bundler
+        bundle install --jobs 4 --retry 3
+
+    - name: RuboCop
+      run: |
+        bundle exec rubocop
+
+
+    - name: DB
+# TODO: to be implemented
+# https://docs.github.com/en/actions/using-workflows
+    - name: RSpec
+# TODO: to be implemented
+# https://docs.github.com/en/actions/using-workflows
+
+
+ci_pull_requests.yml contains
+
+name: CI Pull Requests
+
+on:
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 3.0.2
+
+    - name: Bundle
+      run: |
+        gem install bundler
+        bundle install --jobs 4 --retry 3
+
+    - name: RuboCop
+      run: |
+        bundle exec rubocop
+
+
+    - name: DB
+# TODO: to be implemented
+# https://docs.github.com/en/actions/using-workflows
+    - name: RSpec
+# TODO: to be implemented
+# https://docs.github.com/en/actions/using-workflows
+
+.github/workflows/greetings.yml
+
+name: CurrencyApi - Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: 'Thank you for making time to enhance the project!'
+        pr-message: 'Thank you for your help with making this project better!'
+

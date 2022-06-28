@@ -1,0 +1,14 @@
+development:
+  :concurrency: 2
+  :logfile: ./log/sidekiq.log
+:timeout: 120
+:queues:
+  - default
+  - scrapper
+:schedule:
+  scrapper:
+    cron: '0 1 * * *'   # Runs every 1 a.m.
+    description: "This job collects data from the api.nbp.pl and store it to DB"
+    class: ScrapperJob
+    queue: scrapper
+
